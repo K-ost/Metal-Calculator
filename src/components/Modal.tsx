@@ -1,21 +1,21 @@
-import styled from "styled-components"
-import BtnIcon from "../ui/BtnIcon"
+import styled from "styled-components";
+import BtnIcon from "../ui/BtnIcon";
 
-type ModalSizeType = 'small' | 'default'
+type ModalSizeType = "small" | "default";
 
-interface IModal {
-  children: React.ReactNode
-  close: React.Dispatch<React.SetStateAction<boolean>>
-  open: boolean
-  title: string
-  size?: ModalSizeType
-}
+type ModalProps = {
+  children: React.ReactNode;
+  close: React.Dispatch<React.SetStateAction<boolean>>;
+  open: boolean;
+  title: string;
+  size?: ModalSizeType;
+};
 
 // Styles
 const ModalBox = styled.div<{ $active: boolean }>`
   transition: all 200ms linear;
-  opacity: ${props => props.$active ? '1' : '0'};
-  visibility: ${props => props.$active ? 'visible' : 'hidden'};
+  opacity: ${(props) => (props.$active ? "1" : "0")};
+  visibility: ${(props) => (props.$active ? "visible" : "hidden")};
   position: fixed;
   left: 0;
   top: 0;
@@ -26,16 +26,16 @@ const ModalBox = styled.div<{ $active: boolean }>`
   align-items: center;
   justify-content: center;
   z-index: 1000;
-`
+`;
 export const ModalBoxOverlay = styled.div`
-  background: rgba(0,0,0,0.75);
+  background: rgba(0, 0, 0, 0.75);
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   right: 0;
   z-index: 990;
-`
+`;
 const ModalBoxInside = styled.div<{ $size: ModalSizeType }>`
   background: var(--color-white);
   border-radius: 10px;
@@ -46,14 +46,16 @@ const ModalBoxInside = styled.div<{ $size: ModalSizeType }>`
   position: relative;
   width: 100%;
   z-index: 999;
-  ${props => props.$size === 'small' && `
+  ${(props) =>
+    props.$size === "small" &&
+    `
     max-width: 380px;
     text-align: center;
   `}
   &::before {
     background: var(--color-warning);
     border-radius: 2px;
-    content: '';
+    content: "";
     display: block;
     width: 2px;
     height: 47px;
@@ -63,28 +65,37 @@ const ModalBoxInside = styled.div<{ $size: ModalSizeType }>`
   }
   @media screen and (max-width: 720px) {
     padding: 20px;
-    &::before { top: 20px; }
+    &::before {
+      top: 20px;
+    }
   }
-`
+`;
 export const Close = styled.div`
   position: absolute;
   right: -10px;
   top: -10px;
-`
+`;
 
-const Modal: React.FC<IModal> = ({ children, close, open, title, size = 'default' }) => {
+const Modal = (props: ModalProps): JSX.Element => {
+  const { children, close, open, title, size = "default" } = props;
+
   return (
     <ModalBox $active={open}>
       <ModalBoxOverlay onClick={() => close(false)} />
       <ModalBoxInside $size={size}>
         <Close>
-          <BtnIcon classname="closeIcon" handler={() => close(false)} color="warning" rounded />
+          <BtnIcon
+            classname="closeIcon"
+            handler={() => close(false)}
+            color="warning"
+            rounded
+          />
         </Close>
         <h2>{title}</h2>
         {children}
       </ModalBoxInside>
     </ModalBox>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

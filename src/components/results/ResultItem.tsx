@@ -1,15 +1,15 @@
-import styled from "styled-components"
-import Modal from "../Modal"
-import { useState } from "react"
-import Btn from "../../ui/Btn"
-import { ResultsTableTd } from "./Results"
+import styled from "styled-components";
+import Modal from "../Modal";
+import { useState } from "react";
+import Btn from "../../ui/Btn";
+import { ResultsTableTd } from "./Results";
 
-interface IResultItem {
-  children: React.ReactNode
-  classname?: string
-  elId: string
-  remove: (id: string) => void
-}
+type ResultItemProps = {
+  children: React.ReactNode;
+  classname?: string;
+  elId: string;
+  remove: (id: string) => void;
+};
 
 // Styles
 export const Delete = styled.button`
@@ -18,7 +18,7 @@ export const Delete = styled.button`
   background-repeat: no-repeat;
   border-radius: 100px;
   border: 0;
-  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: block;
   height: 32px;
@@ -32,16 +32,17 @@ export const Delete = styled.button`
     right: -6px;
     top: -6px;
   }
-`
+`;
 
-const ResultItem: React.FC<IResultItem> = ({ children, classname = 'grid grid-6 grid-mb-1', elId, remove }) => {
-  const [modal, setModal] = useState<boolean>(false)
+const ResultItem = (props: ResultItemProps): JSX.Element => {
+  const { children, classname = "grid grid-6 grid-mb-1", elId, remove } = props;
+  const [modal, setModal] = useState<boolean>(false);
 
   // removeItem
   const removeItem = () => {
-    setModal(false)
-    remove(elId)
-  }
+    setModal(false);
+    remove(elId);
+  };
 
   return (
     <>
@@ -49,14 +50,19 @@ const ResultItem: React.FC<IResultItem> = ({ children, classname = 'grid grid-6 
         {children}
         <Delete className="deleteIcon" onClick={() => setModal(true)} />
       </ResultsTableTd>
-      <Modal close={setModal} open={modal} title="Удалить результат" size="small">
+      <Modal
+        close={setModal}
+        open={modal}
+        title="Удалить результат"
+        size="small"
+      >
         <div className="grid grid-2">
           <Btn handler={() => setModal(false)} title="Отмена" color="white" />
           <Btn handler={removeItem} title="Удалить" color="warning" />
         </div>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default ResultItem
+export default ResultItem;

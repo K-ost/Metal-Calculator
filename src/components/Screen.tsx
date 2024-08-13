@@ -1,17 +1,17 @@
-import { useResultStore } from "../store/resultStore"
-import styled from "styled-components"
-import { ShapeType } from "../types"
-import Field from "../ui/Field"
-import FormControl from "../ui/FormControl"
-import Select from "../ui/Select"
-import { lengthSizeSelect, weightSizeSelect } from "../selects"
-import { createLabelFunction, sizesList } from "../helpers"
+import { useResultStore } from "../store/resultStore";
+import styled from "styled-components";
+import { ShapeType } from "../types";
+import Field from "../ui/Field";
+import FormControl from "../ui/FormControl";
+import Select from "../ui/Select";
+import { lengthSizeSelect, weightSizeSelect } from "../selects";
+import { createLabelFunction, sizesList } from "../helpers";
 
-interface IScreen {
-  errors: any
-  register: any
-  shape: ShapeType
-}
+type ScreenProps = {
+  errors: any;
+  register: any;
+  shape: ShapeType;
+};
 
 // Styles
 const View = styled.div`
@@ -26,45 +26,62 @@ const View = styled.div`
     border-radius: 3px 3px 10px 10px;
     height: 150px;
   }
-`
+`;
 
-const Screen: React.FC<IScreen> = ({ errors, register, shape }) => {
-  const { sizetype, weightype, changeSizeType, changeWeightType } = useResultStore()
-  
-  const shapeSizesList = shape.list.map(el => {
-    const found = sizesList.find(i => i.id === el)
-    return found
-  })
+const Screen = (props: ScreenProps): JSX.Element => {
+  const { errors, register, shape } = props;
+  const { sizetype, weightype, changeSizeType, changeWeightType } =
+    useResultStore();
+
+  const shapeSizesList = shape.list.map((el) => {
+    const found = sizesList.find((i) => i.id === el);
+    return found;
+  });
 
   return (
     <div className="appbox appbox-sizes grid grid-2 grid-mb-1">
       <View className={`viewscreen viewscreen-${shape.value}`}></View>
       <div className="appbox-fields">
         {shapeSizesList.map((el, index) => {
-          const nameField: string = el!.value
-          const label = createLabelFunction(nameField, el!.title)
-          return <Field key={index} title={label}>
-            <FormControl
-              type="number"
-              num={index}
-              register={register(nameField, { required: true, min: 1 })}
-              error={errors && errors[nameField]}
-            />
-            {el!.value.includes('length') && <Select handler={(val) => changeSizeType(val)} list={lengthSizeSelect} size="small" defVal={sizetype} />}
-          </Field>
+          const nameField: string = el!.value;
+          const label = createLabelFunction(nameField, el!.title);
+          return (
+            <Field key={index} title={label}>
+              <FormControl
+                type="number"
+                num={index}
+                register={register(nameField, { required: true, min: 1 })}
+                error={errors && errors[nameField]}
+              />
+              {el!.value.includes("length") && (
+                <Select
+                  handler={(val) => changeSizeType(val)}
+                  list={lengthSizeSelect}
+                  size="small"
+                  defVal={sizetype}
+                />
+              )}
+            </Field>
+          );
         })}
 
         <Field title={`Цена, за 1 ${weightype}`}>
           <FormControl
             type="number"
-            register={register('price', { min: 1 })}
+            register={register("price", { min: 1 })}
             error={errors && errors.price}
           />
-          <Select handler={(val) => changeWeightType(val)} list={weightSizeSelect} size="small" defVal={weightype} styles="stick" />
+          <Select
+            handler={(val) => changeWeightType(val)}
+            list={weightSizeSelect}
+            size="small"
+            defVal={weightype}
+            styles="stick"
+          />
         </Field>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Screen
+export default Screen;

@@ -1,8 +1,8 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-interface IAlert {
-  children: React.ReactNode
-}
+type AlertProps = {
+  children: React.ReactNode;
+};
 
 // Styles
 const AlertBox = styled.div`
@@ -11,14 +11,12 @@ const AlertBox = styled.div`
   color: var(--color-white);
   font-size: 14px;
   padding: 10px 16px;
-`
+`;
 
-const Alert: React.FC<IAlert> = ({ children }) => {
-  return (
-    <AlertBox>
-      {children}
-    </AlertBox>
-  )
-}
+const Alert = (props: AlertProps): JSX.Element => {
+  const { children } = props;
 
-export default Alert
+  return <AlertBox>{children}</AlertBox>;
+};
+
+export default Alert;

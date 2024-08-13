@@ -1,43 +1,42 @@
-import { useEffect, useState } from "react"
-import Field from "../ui/Field"
-import { SelectItemType, materialsObjType } from "../types"
-import Select from "../ui/Select"
-import { selectList } from "../selects"
+import { useEffect, useState } from "react";
+import Field from "../ui/Field";
+import { SelectItemType, materialsObjType } from "../types";
+import Select from "../ui/Select";
+import { selectList } from "../selects";
 
-interface IMaterials {
-  setMaterials: React.Dispatch<React.SetStateAction<materialsObjType | null>>
-}
+type MaterialsProps = {
+  setMaterials: React.Dispatch<React.SetStateAction<materialsObjType | null>>;
+};
 
-const Materials: React.FC<IMaterials> = ({ setMaterials }) => {
-  const [material, setMaterial] = useState<string>(selectList[0].value)
-  const [marks, setMarks] = useState<SelectItemType[]>(selectList[0].list!)
-  const [mark, setMark] = useState<string>(marks[0].value)
+const Materials = (props: MaterialsProps): JSX.Element => {
+  const { setMaterials } = props;
+  const [material, setMaterial] = useState<string>(selectList[0].value);
+  const [marks, setMarks] = useState<SelectItemType[]>(selectList[0].list!);
+  const [mark, setMark] = useState<string>(marks[0].value);
 
   // handlerMaterial
   const handlerMaterial = (val: string) => {
-    setMaterial(val)
-    setMarks(selectList.find(el => el.value === val)?.list!)
-    setMark(selectList.find(el => el.value === val)?.list![0].value!)
-  }
+    setMaterial(val);
+    setMarks(selectList.find((el) => el.value === val)?.list!);
+    setMark(selectList.find((el) => el.value === val)?.list![0].value!);
+  };
 
   // handlerMark
   const handlerMark = (val: string) => {
-    setMark(val)
-  }
-
+    setMark(val);
+  };
 
   useEffect(() => {
-    const materialCurrent = selectList.find(el => el.value === material)
-    const markName = marks.find(el => el.value === mark)?.label
-    const markVal = marks.find(el => el.value === mark)?.dataValue
+    const materialCurrent = selectList.find((el) => el.value === material);
+    const markName = marks.find((el) => el.value === mark)?.label;
+    const markVal = marks.find((el) => el.value === mark)?.dataValue;
     const materialsObj = {
       materialName: materialCurrent?.label,
       markName,
-      mark: Number(markVal)
-    } as materialsObjType
-    setMaterials(materialsObj)
-  }, [material, mark])
-
+      mark: Number(markVal),
+    } as materialsObjType;
+    setMaterials(materialsObj);
+  }, [material, mark]);
 
   return (
     <div className="appbox grid grid-2 mb">
@@ -52,7 +51,7 @@ const Materials: React.FC<IMaterials> = ({ setMaterials }) => {
         </Field>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Materials
+export default Materials;
