@@ -11,7 +11,7 @@ const fnCalc = (type: ShapeValueType, sizes: number[]) => {
   return calcMetalFuction(type, mark, sizes, price, length, weight);
 };
 
-describe("calcMetalFuction", () => {
+describe("calcMetalFunction", () => {
   it("Pipe Square", () => {
     const result = fnCalc("pipe-square", [100, 100, 1000, 10]);
     expect(result.weight).toStrictEqual("31.40");
@@ -45,5 +45,40 @@ describe("calcMetalFuction", () => {
     expect(result.weight).toStrictEqual("68.30");
     expect(result.price).toStrictEqual("3414.75 руб.");
     expect(result.square).toStrictEqual("0.31");
+  });
+
+  it("Ribbon", () => {
+    const result = fnCalc("ribbon", [10, 100, 1000]);
+    expect(result.weight).toStrictEqual("7.85");
+    expect(result.price).toStrictEqual("392.50 руб.");
+    expect(result.square).toStrictEqual("0.10");
+  });
+
+  it("Rail", () => {
+    const result = fnCalc("rail", [100, 100, 5, 5, 1000]);
+    expect(result.weight).toStrictEqual("11.38");
+    expect(result.price).toStrictEqual("569.13 руб.");
+    expect(result.square).toStrictEqual("0.59");
+  });
+
+  it("Sheet", () => {
+    const result = fnCalc("sheet", [100, 100, 1000, 1]);
+    expect(result.weight).toStrictEqual("78.50");
+    expect(result.price).toStrictEqual("3925.00 руб.");
+    expect(result.square).toStrictEqual("0.10");
+  });
+
+  it("Shweller", () => {
+    const result = fnCalc("shwell", [100, 100, 1000, 5]);
+    expect(result.weight).toStrictEqual("10.99");
+    expect(result.price).toStrictEqual("549.50 руб.");
+    expect(result.square).toStrictEqual("0.60");
+  });
+
+  it("Square", () => {
+    const result = fnCalc("square", [100, 1000]);
+    expect(result.weight).toStrictEqual("78.50");
+    expect(result.price).toStrictEqual("3925.00 руб.");
+    expect(result.square).toStrictEqual("0.40");
   });
 });
