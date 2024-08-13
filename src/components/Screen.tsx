@@ -52,6 +52,7 @@ const Screen = (props: ScreenProps): JSX.Element => {
                 num={index}
                 register={register(nameField, { required: true, min: 1 })}
                 error={errors && errors[nameField]}
+                dataTestId={nameField}
               />
               {el!.value.includes("length") && (
                 <Select

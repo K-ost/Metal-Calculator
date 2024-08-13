@@ -1,50 +1,87 @@
-import { Link, NavLink } from "react-router-dom"
-import styled, { css } from "styled-components"
+import { Link, NavLink } from "react-router-dom";
+import styled, { css } from "styled-components";
 
-type ColorType = 'line' | 'warning' | 'blue' | 'transparent'
+type ColorType = "line" | "warning" | "blue" | "transparent";
 
 interface IBtnIcon<T> {
-  classname?: string
-  color?: ColorType
-  handler?: React.Dispatch<React.SetStateAction<T>>
-  rounded?: boolean
-  areaLabel?: string
-  to?: string
-  type?: 'button' | 'link' | 'navlink'
+  classname?: string;
+  color?: ColorType;
+  handler?: React.Dispatch<React.SetStateAction<T>>;
+  rounded?: boolean;
+  areaLabel?: string;
+  to?: string;
+  type?: "button" | "link" | "navlink";
+  dataTestId?: string;
 }
 
 // Styles
-const IconStyles = css<{ $color: ColorType, $rounded: boolean }>`
-  background-color: var(--color-${props => props.$color});
+const IconStyles = css<{ $color: ColorType; $rounded: boolean }>`
+  background-color: var(--color-${(props) => props.$color});
   background-position: center;
   background-repeat: no-repeat;
   background-size: 20px;
   border: 0;
-  border-radius: ${props => props.$rounded ? '50%' : '6px'};
+  border-radius: ${(props) => (props.$rounded ? "50%" : "6px")};
   cursor: pointer;
   outline: none;
   padding: 0;
   height: 40px;
   width: 40px;
-`
-const IconBtn = styled.button<{ $color: ColorType, $rounded: boolean }>`
+`;
+const IconBtn = styled.button<{ $color: ColorType; $rounded: boolean }>`
   ${IconStyles}
-`
-const IconLink = styled(Link)<{ $color: ColorType, $rounded: boolean }>`
+`;
+const IconLink = styled(Link)<{ $color: ColorType; $rounded: boolean }>`
   ${IconStyles}
-`
-const IconNavLink = styled(NavLink)<{ $color: ColorType, $rounded: boolean }>`
+`;
+const IconNavLink = styled(NavLink)<{ $color: ColorType; $rounded: boolean }>`
   ${IconStyles}
-`
+`;
 
-const BtnIcon: React.FC<IBtnIcon<any>> = ({ areaLabel, classname, color = 'line', handler, rounded = false, to, type = 'button' }) => {
+const BtnIcon: React.FC<IBtnIcon<any>> = ({
+  areaLabel,
+  classname,
+  color = "line",
+  handler,
+  rounded = false,
+  to,
+  type = "button",
+  dataTestId,
+}) => {
   return (
     <>
-      {(type === 'button') && <IconBtn className={classname} onClick={handler} $color={color} $rounded={rounded} aria-label={areaLabel} />}
-      {(type === 'link') && <IconLink className={classname} to={to!} $color={color} $rounded={rounded} aria-label={areaLabel} />}
-      {(type === 'navlink') && <IconNavLink className={classname} to={to!} $color={color} $rounded={rounded} aria-label={areaLabel} />}
+      {type === "button" && (
+        <IconBtn
+          className={classname}
+          onClick={handler}
+          $color={color}
+          $rounded={rounded}
+          aria-label={areaLabel}
+          data-testid={dataTestId}
+        />
+      )}
+      {type === "link" && (
+        <IconLink
+          className={classname}
+          to={to!}
+          $color={color}
+          $rounded={rounded}
+          aria-label={areaLabel}
+          data-testid={dataTestId}
+        />
+      )}
+      {type === "navlink" && (
+        <IconNavLink
+          className={classname}
+          to={to!}
+          $color={color}
+          $rounded={rounded}
+          aria-label={areaLabel}
+          data-testid={dataTestId}
+        />
+      )}
     </>
-  )
-}
+  );
+};
 
-export default BtnIcon
+export default BtnIcon;

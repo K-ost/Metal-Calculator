@@ -23,6 +23,7 @@ const Header = (props: HeaderProps): JSX.Element => {
         classname="calcSprayIcon"
         to="/paint"
         type="navlink"
+        dataTestId="calc-paint"
       />
       <BtnIcon
         areaLabel="Меню"
