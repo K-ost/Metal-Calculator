@@ -152,7 +152,12 @@ const Results = (props: ResultsProps): JSX.Element => {
       >
         <div className="grid grid-2">
           <Btn handler={() => setModal(false)} title="Отмена" color="white" />
-          <Btn handler={removeAllHandler} title="Удалить" color="warning" />
+          <Btn
+            handler={removeAllHandler}
+            title="Удалить"
+            color="warning"
+            dataTestId="removeHandler"
+          />
         </div>
       </Modal>
     </div>

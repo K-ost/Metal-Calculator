@@ -12,6 +12,7 @@ import { CurrencyType, PaintType } from "../types";
 import { usePaintResultStore } from "../store/resultPaintStore";
 import Results from "../components/results/Results";
 import PaintResults from "../components/results/PaintResults";
+import { nanoid } from "nanoid";
 
 // FormValues
 type FormValues = {
@@ -39,6 +40,7 @@ const PaintCalc = (): JSX.Element => {
   // submitForm
   const submitForm = (data: FormValues) => {
     const object: PaintType = {
+      id: nanoid(),
       layers: Number(data.layers),
       material,
       number: Number(data.number),
@@ -66,6 +68,7 @@ const PaintCalc = (): JSX.Element => {
                 register={register("price", { required: true, min: 1 })}
                 placeholder="500"
                 error={errors.hasOwnProperty("price")}
+                dataTestId="priceField"
               />
               <Select
                 handler={(val) => setCurrency(val)}
@@ -114,6 +117,7 @@ const PaintCalc = (): JSX.Element => {
                 register={register("square", { required: true, min: 1 })}
                 placeholder="10"
                 error={errors.hasOwnProperty("square")}
+                dataTestId="squareField"
               />
             </Field>
             {material === "sheet" && (
@@ -144,7 +148,12 @@ const PaintCalc = (): JSX.Element => {
           </div>
 
           <div className="appbox text-right">
-            <Btn title="Посчитать" type="submit" handler={() => {}} />
+            <Btn
+              title="Посчитать"
+              type="submit"
+              handler={() => {}}
+              dataTestId="paintCount"
+            />
           </div>
         </div>
       </form>

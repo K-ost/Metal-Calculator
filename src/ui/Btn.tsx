@@ -10,6 +10,7 @@ interface IBtn<T> {
   href?: string;
   size?: SizeBtnType;
   type?: "button" | "submit";
+  dataTestId?: string;
 }
 
 // Styled
@@ -62,15 +63,28 @@ const Btn: React.FC<IBtn<any>> = ({
   title,
   size = "large",
   type = "button",
+  dataTestId,
 }) => {
   return (
     <>
       {!href ? (
-        <BtnBox type={type} onClick={handler} $color={color} $size={size}>
+        <BtnBox
+          type={type}
+          onClick={handler}
+          $color={color}
+          $size={size}
+          data-testid={dataTestId}
+        >
           {title}
         </BtnBox>
       ) : (
-        <BtnLink href={href} target="_blank" $color={color} $size={size}>
+        <BtnLink
+          href={href}
+          target="_blank"
+          $color={color}
+          $size={size}
+          data-testid={dataTestId}
+        >
           {title}
         </BtnLink>
       )}
